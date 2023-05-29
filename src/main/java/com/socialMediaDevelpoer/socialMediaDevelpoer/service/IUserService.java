@@ -21,5 +21,7 @@ public interface IUserService {
     public List<DisplayPostDto> getPosts(Integer pageNumber, Integer pageSize, String date);
     public String followUser(String userId);
     public String unFollowUser(String userId);
+    public String likePost(String postId,String PostuserId);
+    String disLikePost(String postId,String PostuserId);
 
 }

@@ -4,10 +4,12 @@ import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.DisplayPostDto;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.LoginDto;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.PostDto;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.UserProfileDto;
+import com.socialMediaDevelpoer.socialMediaDevelpoer.entity.LikeDislike;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.entity.Post;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.entity.Token;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.entity.UserAccount;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.repository.AccountRepository;
+import com.socialMediaDevelpoer.socialMediaDevelpoer.repository.LikeDislikeRepository;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.repository.PostDataRepository;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.repository.TokenRepository;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.security.JwtAuthFilter;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.SimpleTimeZone;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +44,8 @@ public class UserService implements IUserService{
     TokenRepository tokenRepository;
     @Autowired
     PostDataRepository postDataRepository;
+    @Autowired
+    LikeDislikeRepository likeDislikeRepository;
     @Override
     public String loginUser(LoginDto loginDto) {
         UserAccount user =accountRepository.findByEmail(loginDto.getEmail());
@@ -155,4 +160,30 @@ public class UserService implements IUserService{
         accountRepository.save(requestedUser);
         return "unfollowed the user";
     }
+
+    @Override
+    public String likePost(String postId, String postuserId) {
+        UserAccount userAccount= getUserObject();
+        if(likeDislikeRepository.existsByUseridAndPostidAndPostuserid(userAccount.getId(),postId,postuserId)){
+            return "post is already liked";
+        }
+        System.out.println("like dislike user: "+userAccount.getUsername());
+        LikeDislike likeDislike = new LikeDislike(userAccount.getId(),postId,postuserId);
+        likeDislikeRepository.save(likeDislike);
+        return "post of user is liked";
+    }
+
+    @Override
+    public String disLikePost(String postId, String postuserId) {
+        UserAccount userAccount= getUserObject();
+        LikeDislike likeDislike = likeDislikeRepository.findByUseridAndPostidAndPostuserid(userAccount.getId(),postId,postuserId);
+        if(likeDislike!=null){
+            likeDislikeRepository.delete(likeDislike);
+            System.out.println(likeDislike.getPostuserid());
+            return "post of user is disliked";
+        }
+        return "post requested by user to dislike is not present";
+    }
+
+
 }

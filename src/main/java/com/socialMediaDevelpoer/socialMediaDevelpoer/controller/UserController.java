@@ -1,5 +1,4 @@
 package com.socialMediaDevelpoer.socialMediaDevelpoer.controller;
-
 import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.DisplayPostDto;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.LoginDto;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.PostDto;
@@ -54,9 +53,9 @@ public class UserController {
     {
         return userService.getPosts(pageNumber,pageSize,sortBy);
     }
-    @PostMapping("/followrequest")
+    @PostMapping("/follow")
     @Secured("ROLE_USER")
-    public String followUser(@RequestParam("follow") String userid){
+    public String followUser(@RequestParam("user_id") String userid){
             return userService.followUser(userid);
     }
     @DeleteMapping("/unfollow")
@@ -64,5 +63,21 @@ public class UserController {
     public String unFollowUser(@RequestParam("userid") String userid){
         return userService.unFollowUser(userid);
     }
+    @PostMapping("/like/post")
+    @Secured("ROLE_USER")
+    public String likePost(@RequestParam("post_id") String postId,
+                            @RequestParam("Post_user_id")String postUserId){
+
+                        return userService.likePost(postId,postUserId);
+    }
+
+    @DeleteMapping("/dislike/post")
+    @Secured("ROLE_USER")
+    public String disLikePost(@RequestParam("post_id") String postId,
+                           @RequestParam("Post_user_id")String postUserId){
+
+        return userService.disLikePost(postId,postUserId);
+    }
+
 
 }
