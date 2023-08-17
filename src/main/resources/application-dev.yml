@@ -1,0 +1,9 @@
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/socialMediaDevelopment
+        username: root
+        password: khushal
+
+    jpa:
+        hibernate:
+            ddl-auto: update

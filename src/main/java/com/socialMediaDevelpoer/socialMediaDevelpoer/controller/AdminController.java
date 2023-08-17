@@ -16,7 +16,7 @@ public class AdminController {
 
     @GetMapping("/login")
     public String loginUser(@RequestBody LoginDto loginDto) throws Exception {
-        System.out.println("hello");
+       // System.out.println("hello");
         return adminService.adminLogin(loginDto);
     }
 

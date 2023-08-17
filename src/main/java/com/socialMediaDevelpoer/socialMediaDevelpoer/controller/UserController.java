@@ -4,7 +4,8 @@ import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.LoginDto;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.PostDto;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.dto.UserProfileDto;
 import com.socialMediaDevelpoer.socialMediaDevelpoer.service.IUserService;
-import jakarta.servlet.http.HttpServletRequest;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,11 @@ public class UserController {
     IUserService userService;
     @GetMapping("/login")
     public String loginUser(@RequestBody LoginDto loginDto) throws Exception {
-        System.out.println("hello");
         return userService.loginUser(loginDto);
     }
 
     @GetMapping("/logout")
-    @Secured("ROLE_USER")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     public String logoutUser(){
            return userService.logoutUser();
     }
@@ -56,7 +56,7 @@ public class UserController {
     @PostMapping("/follow")
     @Secured("ROLE_USER")
     public String followUser(@RequestParam("user_id") String userid){
-            return userService.followUser(userid);
+        return userService.followUser(userid);
     }
     @DeleteMapping("/unfollow")
     @Secured("ROLE_USER")

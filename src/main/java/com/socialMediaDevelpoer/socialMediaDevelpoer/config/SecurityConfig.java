@@ -14,9 +14,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
     @Autowired
@@ -55,6 +57,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/auth/register/**").permitAll()
+                .requestMatchers("/v3/api-docs").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/user/login/**").permitAll()
                 .requestMatchers("/admin/login/**").permitAll()
                 .anyRequest().authenticated();

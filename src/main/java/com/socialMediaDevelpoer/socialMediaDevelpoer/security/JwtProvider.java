@@ -54,7 +54,6 @@ public class JwtProvider {
                return false;
            }
            if(token!=null && token1==null){
-               System.out.println("ff k m k m km ");
                return false;
            }
           return true;

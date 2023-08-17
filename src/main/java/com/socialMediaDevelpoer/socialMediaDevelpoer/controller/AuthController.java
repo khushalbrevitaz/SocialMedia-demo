@@ -22,9 +22,4 @@ public class AuthController {
          registerAccount.registerAccountService(registerDto);
         return "true";
     }
-
-    @GetMapping("/")
-    public String bb(){
-        return "rrrr";
-    }
 }

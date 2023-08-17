@@ -51,7 +51,6 @@ public class UserService implements IUserService{
         UserAccount user =accountRepository.findByEmail(loginDto.getEmail());
 
         if(loginDto.getPassword().equals(user.getPassword()) && user.getRole().equals("ROLE_USER")){
-            System.out.println("hh");
             String token= jwtProvider.generateToken(user.getEmail());
 
             Token tokenObject = tokenRepository.findByUserAccount(user);
@@ -75,7 +74,7 @@ public class UserService implements IUserService{
         Token token = tokenRepository.findByUserAccount(details);
         token.setToken(null);
         tokenRepository.save(token);
-        System.out.println(token.getUserAccount() +"  jjjssswasw swe  df");
+        System.out.println(token.getUserAccount() +"  user is saved and token is null");
         return null;
     }
 
