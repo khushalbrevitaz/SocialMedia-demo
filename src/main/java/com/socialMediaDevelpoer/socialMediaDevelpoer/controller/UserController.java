@@ -19,7 +19,8 @@ public class UserController {
     @Autowired
     IUserService userService;
     @GetMapping("/login")
-    public String loginUser(@RequestBody LoginDto loginDto) throws Exception {
+    public String loginUser(@RequestBody LoginDto loginDto)  {
+        System.out.println("controller user"+ loginDto.getEmail());
         return userService.loginUser(loginDto);
     }
 

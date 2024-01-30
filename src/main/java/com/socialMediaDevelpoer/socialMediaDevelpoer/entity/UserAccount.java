@@ -54,7 +54,7 @@ public class UserAccount {
         this.following = following;
     }
 
-    public UserAccount(String username, String password, String email, byte[] bytes, String role) {
+    public UserAccount(String username, String password, String email, byte[] profilePic, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
